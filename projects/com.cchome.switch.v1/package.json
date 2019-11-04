@@ -1,0 +1,13 @@
+{
+  "name": "com-cchome-switch-v1",
+  "version": "1.0.27",
+  "scripts": {
+    "start": "node ../../bin/runProject.js"
+  },
+  "dependencies": {},
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
