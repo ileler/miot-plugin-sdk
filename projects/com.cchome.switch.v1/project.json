@@ -1,4 +1,5 @@
 {
+  "models": "cchome.switch.v1",
   "package_path": "com.cchome.switch.v1",
   "min_sdk_api_level": 10027,
   "developer_id": "",
