@@ -1,5 +1,8 @@
 'use strict';
 
+import React from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+
 import {Entrance, Package} from "miot";
 import {strings, Styles} from 'miot/resources';
 import {CommonSetting, SETTING_KEYS} from "miot/ui/CommonSetting";
@@ -7,8 +10,7 @@ import {firstAllOptions, secondAllOptions} from "miot/ui/CommonSetting/CommonSet
 import {ListItem, ListItemWithSlider, ListItemWithSwitch} from 'miot/ui/ListItem';
 import Separator from 'miot/ui/Separator';
 import TitleBar from 'miot/ui/TitleBar';
-import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+
 
 const {first_options, second_options} = SETTING_KEYS;
 
@@ -68,8 +70,8 @@ export default class Setting extends React.Component {
             deleteDeviceMessage: 'test',
             excludeRequiredOptions: [firstAllOptions.LOCATION, secondAllOptions.SECURITY],
             option: {
-                privacyURL: require('../../Resources/raw/privacy_zh.html'),
-                agreementURL: require('../../Resources/raw/license_zh.html'),
+                privacyURL: require('../Resources/raw/privacy_zh.html'),
+                agreementURL: require('../Resources/raw/license_zh.html'),
                 experiencePlanURL: '',
                 hideAgreement: true
             },

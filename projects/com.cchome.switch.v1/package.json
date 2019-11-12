@@ -1,6 +1,6 @@
 {
   "name": "com-cchome-switch-v1",
-  "version": "1.0.27",
+  "version": "0.0.1",
   "scripts": {
     "start": "node ../../bin/runProject.js"
   },
@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "react-native-iphone-x-helper": "^1.2.0",
+    "react-native-root-toast": "^3.0.2"
+  }
 }
