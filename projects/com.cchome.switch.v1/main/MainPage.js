@@ -12,6 +12,8 @@ import {getString} from './MHLocalizableString';
 
 
 const {width, height} = Dimensions.get('window');
+const CARD_PADDING = 35;
+const CARD_HEIGHT = 125;
 const ICON_SIZE = 40;
 const DEFAULT_MARGIN = 10;
 
@@ -44,6 +46,8 @@ export default class MainPage extends React.Component {
         this.state = {
             dataSource: ds.cloneWithRows(this._menuData.map((o) => (o.name))),
         };
+        var count = this.state.dataSource.getRowCount();
+        this.state.cardContainerHeight = (CARD_HEIGHT + CARD_PADDING + (count == 1 ? 15 : 0)) * count
     }
 
     _createMenuData() {
@@ -89,7 +93,8 @@ export default class MainPage extends React.Component {
                     showsVerticalScrollIndicator={false}
                     style={{
                         borderWidth: 1,
-                        padding: 0
+                        padding: 0,
+                        height: height - this.state.cardContainerHeight
                     }}
                 >
                     <View style={{
@@ -97,6 +102,7 @@ export default class MainPage extends React.Component {
                     }}>
                         <Text>{width}</Text>
                         <Text>{height}</Text>
+                        <Text>{this.state.dataSource.getRowCount()}</Text>
                         <Text>test1</Text>
                         <Text>test2</Text>
                         <Text>test3</Text>
@@ -129,7 +135,7 @@ export default class MainPage extends React.Component {
                         <Text>test30</Text>
                     </View>
                 </ScrollView>
-                <ListView style={styles.list} contentContainerStyle={{flex: 1}}
+                <ListView style={{height: this.state.cardContainerHeight}} contentContainerStyle={{flex: 1}}
                           dataSource={this.state.dataSource} renderRow={this._renderRow.bind(this)}/>
             </View>
         );
@@ -149,7 +155,7 @@ export default class MainPage extends React.Component {
                     innerView={this.getInnerView()}
                     showShadow={false}
                     onPress={_ => console.log("value")}
-                    cardStyle={{height: 125, borderWidth: 1, borderRadius: 16}}
+                    cardStyle={{height: CARD_HEIGHT, borderWidth: 1, borderRadius: 16}}
                 />
             </View>
         );
@@ -188,7 +194,7 @@ export default class MainPage extends React.Component {
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         borderTopColor: '#f1f1f1',
         borderTopWidth: 1,
         flexDirection: 'column',
@@ -200,7 +206,7 @@ var styles = StyleSheet.create({
     },
     list: {
         flex: 0,
-        height: 400,
+        // height: 400,
         // alignSelf: 'stretch',
         borderWidth: 1
     },
