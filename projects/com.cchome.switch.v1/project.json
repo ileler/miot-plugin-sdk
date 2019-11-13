@@ -1,5 +1,5 @@
 {
-  "models": "cchome.switch_86l1.v1,cchome.switch_86l2.v1,cchome.switch_86l3.v1,cchome.switch_86l4.v1",
+  "models": "cchome.switch.86l1v1,cchome.switch.86l2v1,cchome.switch.86l3v1,cchome.switch.86l4v1",
   "package_path": "com.cchome.switch.v1",
   "min_sdk_api_level": 10004,
   "version_code": 1,
