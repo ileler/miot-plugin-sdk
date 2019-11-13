@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {Dimensions, Image, ListView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, ListView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {Device, Entrance, Package} from "miot";
 import {Images} from 'miot/resources';
@@ -12,9 +12,10 @@ import {getString} from './MHLocalizableString';
 
 
 const {width, height} = Dimensions.get('window');
-const CARD_PADDING = 35;
+const CARD_PADDING = 50;
 const CARD_HEIGHT = 125;
-const ICON_SIZE = 40;
+const ICON_SIZE = 80;
+const SICON_SIZE = 40;
 const DEFAULT_MARGIN = 10;
 
 
@@ -42,23 +43,22 @@ export default class MainPage extends React.Component {
         var ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-        this._createMenuData();
+        this._createCardData();
         this.state = {
-            dataSource: ds.cloneWithRows(this._menuData.map((o) => (o.name))),
+            dataSource: ds.cloneWithRows(this._cardData.map((o) => (o.name))),
         };
         var count = this.state.dataSource.getRowCount();
-        this.state.cardContainerHeight = (CARD_HEIGHT + CARD_PADDING + (count == 1 ? 15 : 0)) * count
+        this.state.cardContainerHeight = (CARD_HEIGHT * count) + (CARD_PADDING + ((count - 1) * (20 - count)))
     }
 
-    _createMenuData() {
-        this._menuData = [
+    _createCardData() {
+        this._cardData = [
             {
                 'name': '测试开关1',
                 'switch': () => {
                     console.log("开/关")
                 }
-            },
-            {
+            }, {
                 'name': '测试开关2',
                 'switch': () => {
                     console.log("开/关")
@@ -103,6 +103,7 @@ export default class MainPage extends React.Component {
                         <Text>{width}</Text>
                         <Text>{height}</Text>
                         <Text>{this.state.dataSource.getRowCount()}</Text>
+                        <Text>{Device.model}</Text>
                         <Text>test1</Text>
                         <Text>test2</Text>
                         <Text>test3</Text>
@@ -152,8 +153,9 @@ export default class MainPage extends React.Component {
         return (
             <View style={{borderWidth: 1, flexDirection: 'row', justifyContent: 'center'}}>
                 <Card
-                    innerView={this.getInnerView()}
+                    innerView={this._getInnerView({name: rowData})}
                     showShadow={false}
+                    disabled={true}
                     onPress={_ => console.log("value")}
                     cardStyle={{height: CARD_HEIGHT, borderWidth: 1, borderRadius: 16}}
                 />
@@ -161,29 +163,76 @@ export default class MainPage extends React.Component {
         );
     }
 
-    getInnerView() {
+    _getInnerView(data) {
         return (
             <View style={styles.innerContainer}>
-                <Image
-                    style={styles.innerIcon}
-                    source={Images.common.mihome}
-                    resizeMode="contain"
-                />
-                <View style={{flex: 1}}>
-                    <Text
-                        style={styles.innerTitle}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                    >
-                        {'自定义innerView的标题'}
-                    </Text>
-                    <Text
-                        style={styles.innerSubTitle}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                    >
-                        {'自定义innerView的副标题'}
-                    </Text>
+                <TouchableOpacity onPress={() => console.log("value")}>
+                    <Image
+                        style={styles.innerIcon}
+                        source={Images.common.mihome}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
+                <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
+                    <View style={{borderWidth: 1, flex: 0, alignItems: 'center'}}>
+                        <Text
+                            style={styles.innerTitle}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >
+                            {data.name}
+                        </Text>
+                    </View>
+                    <View style={{borderWidth: 1, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
+                            <TouchableOpacity onPress={() => console.log("value")}>
+                                <Image
+                                    style={styles.innerSIcon}
+                                    source={Images.common.mihome}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={styles.innerSubTitle}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
+                                定时
+                            </Text>
+                        </View>
+                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
+                            <TouchableOpacity onPress={() => console.log("value")}>
+                                <Image
+                                    style={styles.innerSIcon}
+                                    source={Images.common.mihome}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={styles.innerSubTitle}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
+                                倒计时
+                            </Text>
+                        </View>
+                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
+                            <TouchableOpacity onPress={() => console.log("value")}>
+                                <Image
+                                    style={styles.innerSIcon}
+                                    source={Images.common.mihome}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
+                            <Text
+                                style={styles.innerSubTitle}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
+                                开关
+                            </Text>
+                        </View>
+                    </View>
                 </View>
             </View>
         );
@@ -221,7 +270,13 @@ var styles = StyleSheet.create({
         height: ICON_SIZE,
         marginRight: DEFAULT_MARGIN
     },
+    innerSIcon: {
+        width: SICON_SIZE,
+        height: SICON_SIZE
+    },
     innerTitle: {
+        width: 100,
+        textAlign: 'center',
         fontSize: 16,
         color: '#000'
     },
