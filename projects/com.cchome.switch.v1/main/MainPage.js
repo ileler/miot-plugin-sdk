@@ -52,19 +52,78 @@ export default class MainPage extends React.Component {
     }
 
     _createCardData() {
-        this._cardData = [
-            {
-                'name': '测试开关1',
-                'switch': () => {
-                    console.log("开/关")
-                }
-            }, {
-                'name': '测试开关2',
-                'switch': () => {
-                    console.log("开/关")
-                }
-            }
-        ];
+        switch (Device.model) {
+            case 'cchome.switch.86l1v1':
+                this._cardData = [
+                    {
+                        'name': '测试开关1',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }
+                ];
+                break;
+            case 'cchome.switch.86l2v1':
+                this._cardData = [
+                    {
+                        'name': '测试开关1',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关2',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }
+                ];
+                break;
+            case 'cchome.switch.86l3v1':
+                this._cardData = [
+                    {
+                        'name': '测试开关1',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关2',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关3',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }
+                ];
+                break;
+            case 'cchome.switch.86l4v1':
+                this._cardData = [
+                    {
+                        'name': '测试开关1',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关2',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关3',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }, {
+                        'name': '测试开关4',
+                        'switch': () => {
+                            console.log("开/关")
+                        }
+                    }
+                ];
+                break;
+        }
     }
 
     componentWillUnmount() {
