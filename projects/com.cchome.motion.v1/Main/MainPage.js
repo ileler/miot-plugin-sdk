@@ -5,7 +5,7 @@ import {Dimensions, Image, ListView, ScrollView, StyleSheet, Text, TouchableOpac
 
 import {Device, Entrance, Package} from "miot";
 import {Images} from 'miot/resources';
-import TitleBar from "miot/ui/TitleBar";
+import NavigationBar from "miot/ui/NavigationBar";
 import Card from 'miot/ui/Card';
 
 import {getString} from './MHLocalizableString';
@@ -24,106 +24,31 @@ export default class MainPage extends React.Component {
         return {
             header:
                 <View>
-                    <TitleBar
-                        type='dark'
+                    <NavigationBar
+                        backgroundColor='transparent'
+                        type={NavigationBar.TYPE.LIGHT}
+                        left={[
+                            {
+                                key: NavigationBar.ICON.BACK,
+                                onPress: _ => Package.exit()
+                            }
+                        ]}
+                        right={[
+                            {
+                                key: NavigationBar.ICON.MORE,
+                                onPress: _ => navigation.navigate('Setting', {'title': '设置'})
+                            }
+                        ]}
                         title={navigation.state["params"] ? navigation.state.params.name : Device.name}
-                        subTitle={getString('NUM_PHOTOS', {'numPhotos': 1})}
-                        onPressLeft={() => {
-                            Package.exit()
-                        }}
-                        onPressRight={() => {
-                            navigation.navigate('Setting', {'title': '设置'});
-                        }}/>
+                    />
                 </View>
         };
     };
 
     constructor(props) {
         super(props);
-        var ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-        this._createCardData();
         this.state = {
-            dataSource: ds.cloneWithRows(this._cardData.map((o) => (o.name))),
         };
-        var count = this.state.dataSource.getRowCount();
-        this.state.cardContainerHeight = (CARD_HEIGHT * count) + (CARD_PADDING + ((count - 1) * (20 - count)))
-    }
-
-    _createCardData() {
-        switch (Device.model) {
-            case 'cchome.switch.86l1v1':
-                this._cardData = [
-                    {
-                        'name': '测试开关1',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }
-                ];
-                break;
-            case 'cchome.switch.86l2v1':
-                this._cardData = [
-                    {
-                        'name': '测试开关1',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关2',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }
-                ];
-                break;
-            case 'cchome.switch.86l3v1':
-                this._cardData = [
-                    {
-                        'name': '测试开关1',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关2',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关3',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }
-                ];
-                break;
-            case 'cchome.switch.86l4v1':
-                this._cardData = [
-                    {
-                        'name': '测试开关1',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关2',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关3',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }, {
-                        'name': '测试开关4',
-                        'switch': () => {
-                            console.log("开/关")
-                        }
-                    }
-                ];
-                break;
-        }
     }
 
     componentWillUnmount() {
@@ -148,55 +73,9 @@ export default class MainPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    style={{
-                        borderWidth: 1,
-                        padding: 0,
-                        height: height - this.state.cardContainerHeight
-                    }}
-                >
-                    <View style={{
-                        padding: 10
-                    }}>
-                        <Text>{width}</Text>
-                        <Text>{height}</Text>
-                        <Text>{this.state.dataSource.getRowCount()}</Text>
-                        <Text>{Device.model}</Text>
-                        <Text>test1</Text>
-                        <Text>test2</Text>
-                        <Text>test3</Text>
-                        <Text>test4</Text>
-                        <Text>test5</Text>
-                        <Text>test6</Text>
-                        <Text>test7</Text>
-                        <Text>test8</Text>
-                        <Text>test9</Text>
-                        <Text>test10</Text>
-                        <Text>test11</Text>
-                        <Text>test12</Text>
-                        <Text>test13</Text>
-                        <Text>test14</Text>
-                        <Text>test15</Text>
-                        <Text>test16</Text>
-                        <Text>test17</Text>
-                        <Text>test18</Text>
-                        <Text>test19</Text>
-                        <Text>test20</Text>
-                        <Text>test21</Text>
-                        <Text>test22</Text>
-                        <Text>test23</Text>
-                        <Text>test24</Text>
-                        <Text>test25</Text>
-                        <Text>test26</Text>
-                        <Text>test27</Text>
-                        <Text>test28</Text>
-                        <Text>test29</Text>
-                        <Text>test30</Text>
-                    </View>
-                </ScrollView>
-                <ListView style={{height: this.state.cardContainerHeight}} contentContainerStyle={{flex: 1}}
-                          dataSource={this.state.dataSource} renderRow={this._renderRow.bind(this)}/>
+                <Text>{width}</Text>
+                <Text>{height}</Text>
+                <Text>{Device.model}</Text>
             </View>
         );
     }
@@ -206,95 +85,6 @@ export default class MainPage extends React.Component {
         if (Package.pageParams.isBackToMainPage && Package.entrance !== Entrance.Main) {
             this.props.navigation.navigate(Package.entrance)
         }
-    }
-
-    _renderRow(rowData, sectionID, rowID) {
-        return (
-            <View style={{borderWidth: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                <Card
-                    innerView={this._getInnerView({name: rowData})}
-                    showShadow={false}
-                    disabled={true}
-                    onPress={_ => console.log("value")}
-                    cardStyle={{height: CARD_HEIGHT, borderWidth: 1, borderRadius: 16}}
-                />
-            </View>
-        );
-    }
-
-    _getInnerView(data) {
-        return (
-            <View style={styles.innerContainer}>
-                <TouchableOpacity onPress={() => console.log("value")}>
-                    <Image
-                        style={styles.innerIcon}
-                        source={Images.common.mihome}
-                        resizeMode="contain"
-                    />
-                </TouchableOpacity>
-                <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
-                    <View style={{borderWidth: 1, flex: 0, alignItems: 'center'}}>
-                        <Text
-                            style={styles.innerTitle}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
-                        >
-                            {data.name}
-                        </Text>
-                    </View>
-                    <View style={{borderWidth: 1, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
-                            <TouchableOpacity onPress={() => console.log("value")}>
-                                <Image
-                                    style={styles.innerSIcon}
-                                    source={Images.common.mihome}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                            <Text
-                                style={styles.innerSubTitle}
-                                numberOfLines={1}
-                                ellipsizeMode="tail"
-                            >
-                                定时
-                            </Text>
-                        </View>
-                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
-                            <TouchableOpacity onPress={() => console.log("value")}>
-                                <Image
-                                    style={styles.innerSIcon}
-                                    source={Images.common.mihome}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                            <Text
-                                style={styles.innerSubTitle}
-                                numberOfLines={1}
-                                ellipsizeMode="tail"
-                            >
-                                倒计时
-                            </Text>
-                        </View>
-                        <View style={{borderWidth: 1, flex: 1, alignItems: 'center'}}>
-                            <TouchableOpacity onPress={() => console.log("value")}>
-                                <Image
-                                    style={styles.innerSIcon}
-                                    source={Images.common.mihome}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                            <Text
-                                style={styles.innerSubTitle}
-                                numberOfLines={1}
-                                ellipsizeMode="tail"
-                            >
-                                开关
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
-        );
     }
 
 }

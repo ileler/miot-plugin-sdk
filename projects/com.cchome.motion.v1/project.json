@@ -1,7 +1,7 @@
 {
   "models": "cchome.motion.v1",
   "package_path": "com.cchome.motion.v1",
-  "min_sdk_api_level": 10004,
+  "min_sdk_api_level": 10021,
   "version_code": 1,
   "entrance_scene": {
     "action_ids": [],
