@@ -9,6 +9,7 @@ import NavigationBar from "miot/ui/NavigationBar";
 import Card from 'miot/ui/Card';
 
 import {getString} from './MHLocalizableString';
+import TimeCell from './TimeCell';
 
 
 const {width, height} = Dimensions.get('window');
@@ -73,9 +74,10 @@ export default class MainPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>{width}</Text>
-                <Text>{height}</Text>
-                <Text>{Device.model}</Text>
+                <TimeCell/>
+                <View style={styles.cardContainer}>
+                    <Text>XXXXX</Text>
+                </View>
             </View>
         );
     }
@@ -92,45 +94,45 @@ export default class MainPage extends React.Component {
 
 var styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        borderTopColor: '#f1f1f1',
-        borderTopWidth: 1,
+        flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#ffffff',
         marginBottom: 0,
         marginTop: 0,
     },
-    list: {
-        flex: 0,
-        // height: 400,
-        // alignSelf: 'stretch',
-        borderWidth: 1
+    timeContainer: {
+        flex: 3,
+        flexDirection: 'column',
+        width: '90%',
+        borderWidth: 1,
+        padding: '5%'
     },
-    innerContainer: {
+    cardContainer: {
         flex: 1,
         alignItems: 'center',
         flexDirection: 'row',
-        paddingHorizontal: DEFAULT_MARGIN
     },
-    innerIcon: {
-        width: ICON_SIZE,
-        height: ICON_SIZE,
-        marginRight: DEFAULT_MARGIN
+    timeRow: {
+        flex: 1,
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        margin: 0,
+        padding: 0
     },
-    innerSIcon: {
-        width: SICON_SIZE,
-        height: SICON_SIZE
+    timeView: {
+        flexDirection: 'column',
+        borderWidth: 1,
+        flex: 1
     },
-    innerTitle: {
-        width: 100,
-        textAlign: 'center',
-        fontSize: 16,
-        color: '#000'
+    timeText: {
+        borderWidth: 1,
+        flex: 1
     },
-    innerSubTitle: {
-        fontSize: 14,
-        color: '#333'
+    timeImage: {
+        borderWidth: 1,
+        flex: 3
     }
 });
