@@ -3,10 +3,10 @@
 import React from 'react';
 import {Dimensions, Image, ListView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import {Device, Entrance, Package} from "miot";
+import {Device, Entrance, Package, Host} from "miot";
 import {Images} from 'miot/resources';
 import NavigationBar from "miot/ui/NavigationBar";
-import Card from 'miot/ui/Card';
+import MHCard from "miot/ui/Card/MHCard";
 
 import {getString} from './MHLocalizableString';
 import TimeCell from './TimeCell';
@@ -26,7 +26,7 @@ export default class MainPage extends React.Component {
             header:
                 <View>
                     <NavigationBar
-                        backgroundColor='transparent'
+                        backgroundColor='#a0c0c0'
                         type={NavigationBar.TYPE.LIGHT}
                         left={[
                             {
@@ -74,9 +74,20 @@ export default class MainPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TimeCell/>
+                <View style={styles.timeContainer}>
+                    <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50, marginBottom: 10}}>今天动态</Text>
+                    <View style={styles.timeSubContainer}>
+                        <TimeCell/>
+                    </View>
+                </View>
                 <View style={styles.cardContainer}>
-                    <Text>XXXXX</Text>
+                    <MHCard
+                        title='智能场景'
+                        titleStyle={{ fontSize: 18 }}
+                        cardType={MHCard.CARD_TYPE.NORMAL}
+                        cardRadiusType={MHCard.CARD_RADIUS_TYPE.ALL}
+                        onPress={_ => Host.ui.openIftttAutoPage()}
+                    />
                 </View>
             </View>
         );
@@ -95,44 +106,25 @@ export default class MainPage extends React.Component {
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#a0c0c0',
         marginBottom: 0,
         marginTop: 0,
     },
     timeContainer: {
         flex: 3,
-        flexDirection: 'column',
-        width: '90%',
-        borderWidth: 1,
-        padding: '5%'
+        width: '60%',
+        alignItems: 'center',
+    },
+    timeSubContainer: {
+        height: '80%',
+        width: '100%',
     },
     cardContainer: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'flex-end',
         flexDirection: 'row',
-    },
-    timeRow: {
-        flex: 1,
-        borderWidth: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 0,
-        padding: 0
-    },
-    timeView: {
-        flexDirection: 'column',
-        borderWidth: 1,
-        flex: 1
-    },
-    timeText: {
-        borderWidth: 1,
-        flex: 1
-    },
-    timeImage: {
-        borderWidth: 1,
-        flex: 3
+        paddingBottom: 15
     }
 });

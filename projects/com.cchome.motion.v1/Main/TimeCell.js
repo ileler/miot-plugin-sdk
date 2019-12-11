@@ -1,10 +1,12 @@
 'use strict';
 
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Platform, StyleSheet, Text, View} from 'react-native';
 
 import {Device, Entrance, Package} from "miot";
 import {Images} from 'miot/resources';
+
+const ICON_SIZE = Platform.select({ android: 26, ios: 24 }); // 当android设置24的时候，图形会挤压形成锯齿
 
 
 export default class TimeCell extends React.Component {
@@ -49,13 +51,22 @@ export default class TimeCell extends React.Component {
     }
 
     renderTimeView(count) {
+        const border = { borderTopWidth: 1, borderLeftWidth: 1 };
+        if ((count + 1) % 4 == 0) border.borderRightWidth = 1;
+        if (count >= 20) border.borderBottomWidth = 1;
         return (
-            <View style={styles.timeView}>
+            <View style={[styles.timeView, border]}>
                 <View style={styles.timeText}>
-                    <Text>{count}</Text>
+                    <Text style={{flex: 1, textAlign: 'center', backgroundColor: '#808080'}}>{count}</Text>
                 </View>
                 <View style={styles.timeImage}>
-                    <Image/>
+                    {count==4
+                        ? <Image
+                            style={styles.icon}
+                            source={Images.common.mihome}
+                        />
+                        : null
+                    }
                 </View>
             </View>
         );
@@ -66,31 +77,29 @@ export default class TimeCell extends React.Component {
 
 var styles = StyleSheet.create({
     timeContainer: {
-        flex: 3,
-        flexDirection: 'column',
-        width: '90%',
-        borderWidth: 1,
-        padding: '5%'
+        flex: 1,
+        margin: 0,
+        padding: 0,
     },
     timeRow: {
         flex: 1,
-        borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 0,
-        padding: 0
     },
     timeView: {
-        flexDirection: 'column',
-        borderWidth: 1,
         flex: 1
     },
     timeText: {
-        borderWidth: 1,
+        borderBottomWidth: 1,
         flex: 1
     },
     timeImage: {
-        borderWidth: 1,
-        flex: 3
+        flex: 3,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    icon: {
+        width: '60%',
+        height: '60%',
     }
 });
